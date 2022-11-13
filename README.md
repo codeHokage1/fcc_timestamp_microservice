@@ -21,4 +21,5 @@ GET /api/xxxxxxxxxxx
 // where xxxxxxxxxxx is a unix time, returns a json response of the given date in its unix and utc equivalents
 ```
 
+:warning: **Note**: that the request parameter has to be in the correct date format: yyyy-MM-dd. Any format aside this, whic is also not a unix date equivalent would return an error message json
 
