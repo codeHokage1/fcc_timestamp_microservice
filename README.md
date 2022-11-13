@@ -2,7 +2,7 @@
 
 This is a project done in completion of my Backend & API development course on FreeCodeCamp. It simply returns several date responses depending on the requests.
 
-Link to live API :link: :
+Link to live API :link: : https://fcc-timestamp-microservice-one.vercel.app
 
 ```
 GET / 
