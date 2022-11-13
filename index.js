@@ -7,8 +7,6 @@ var app = express();
 
 
 // import useful packages
-const getUnixTime = require('date-fns/getUnixTime');
-const fromUnixTime = require('date-fns/fromUnixTime')
 const isMatch = require('date-fns/isMatch')
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
@@ -34,7 +32,7 @@ app.get("/api/hello", function (req, res) {
 // endpoint to send back currrent time
 app.get("/api", (req, res) => {
   res.json({
-    "unix": getUnixTime(new Date()),
+    "unix": new Date().getTime(),
     "utc": new Date().toUTCString()
   })
 })
@@ -50,14 +48,14 @@ app.get("/api/:date", (req, res) => {
         })
       } else {
         return res.json({
-          "unix": getUnixTime(new Date(req.params.date)),
+          "unix": new Date(req.params.date).getTime(),
           "utc": new Date(req.params.date).toUTCString()
         })
       }
     }
     res.json({
-      "unix": Number(req.params.date),
-      "utc": new Date(fromUnixTime(req.params.date)).toUTCString()
+      "unix": new Date(Number(req.params.date)).getTime(),
+      "utc": new Date(Number(req.params.date)).toUTCString()
     })
   } catch (error) {
     res.status(500).json({
