@@ -54,7 +54,8 @@ app.get("/api/:date", (req, res) => {
       }
     }
     res.json({
-      "unix": new Date(Number(req.params.date)).getTime(),
+      // "unix": new Date(Number(req.params.date)).getTime(),
+      "unix": Number(req.params.date),
       "utc": new Date(Number(req.params.date)).toUTCString()
     })
   } catch (error) {
