@@ -9,6 +9,7 @@ var app = express();
 // import useful packages
 const getUnixTime = require('date-fns/getUnixTime');
 const fromUnixTime = require('date-fns/fromUnixTime')
+const isMatch = require('date-fns/isMatch')
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -41,18 +42,32 @@ app.get("/api", (req, res) => {
 
 // endpoint tp convert the params date to the corresponding values
 app.get("/api/:date", (req, res) => {
-  if (req.params.date.includes('-')) {
-    return res.json({
-      "unix": getUnixTime(new Date(req.params.date)),
-      "utc": new Date(req.params.date).toUTCString()
+  try {
+    if (req.params.date.includes('-')) {
+      if (!isMatch(req.params.date, 'yyyy-MM-dd')) {
+        return res.json({
+          "error": "invalid Date"
+        })
+      } else {
+        return res.json({
+          "unix": getUnixTime(new Date(req.params.date)),
+          "utc": new Date(req.params.date).toUTCString()
+        })
+      }
+    }
+    res.json({
+      "unix": Number(req.params.date),
+      "utc": new Date(fromUnixTime(req.params.date)).toUTCString()
+    })
+  } catch (error) {
+    res.status(500).json({
+      "error": error.message
     })
   }
-  res.json({
-    "unix": Number(req.params.date),
-    "utc": new Date(fromUnixTime(req.params.date)).toUTCString()
-  })
-  
 })
+
+
+
 
 
 
