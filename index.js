@@ -52,21 +52,24 @@ app.get("/api/:date", (req, res) => {
           "utc": new Date(req.params.date).toUTCString()
         })
       }
+    } else if (Number(req.params.date)) {
+      res.json({
+        // "unix": new Date(Number(req.params.date)).getTime(),
+        "unix": Number(req.params.date),
+        "utc": new Date(Number(req.params.date)).toUTCString()
+      })
+    } else {
+      return res.json({
+        "unix": new Date(req.params.date).getTime(),
+        "utc": new Date(req.params.date).toUTCString()
+      })
     }
-    res.json({
-      // "unix": new Date(Number(req.params.date)).getTime(),
-      "unix": Number(req.params.date),
-      "utc": new Date(Number(req.params.date)).toUTCString()
-    })
   } catch (error) {
     res.status(500).json({
       "error": error.message
     })
   }
 })
-
-
-
 
 
 
